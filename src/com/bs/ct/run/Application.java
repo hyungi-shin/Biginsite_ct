@@ -1,178 +1,104 @@
 package com.bs.ct.run;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import com.bs.ct.common.FileLoadSave;
 import com.bs.ct.model.Common;
-import com.bs.ct.model.Elf;
-import com.bs.ct.model.Human;
-import com.bs.ct.model.Oak;
+import com.bs.ct.weapon.Weapon;
 
 public class Application {
+	
+	private static FileLoadSave fs = null;
 
 	public static void main(String[] args) {
+		
+		fs = new FileLoadSave();
 		
 		Scanner sc = new Scanner(System.in);
 		
 		Common user = null;
-		label:
+		
 		while(true) {
 			System.out.println("1.새로하기");
 			System.out.println("2.불러오기");
 			int choice = sc.nextInt();
 			
 			switch(choice) {
-				case 1 : user = newStart(); 
+				case 1 : user = fs.newStart(); 
 					if(user == null) {
 						System.out.println("다시 시도해주세요.");
-						continue label;
+					} else {
+						System.out.println("접속 완료..");
+						waiting(user);
 					}
 					break;
-				case 2 : user = loadFile();
+				case 2 : System.out.println("파일 로드중..");
+					user = fs.loadFile();
 					if(user == null) {
 						System.out.println("저장된 파일이 없습니다.");
-						continue label;
+					} else {
+						System.out.println("접속 완료..");
+						waiting(user);
 					}
 					break;
-				default : System.out.println("정확한 숫자를 입력해주세요."); continue label;
+				default : System.out.println("정확한 숫자를 입력해주세요.");
 			}
 		}
 		
 		
 	}
 	
-	/** 새로하기 시 파일 생성
-	 */
-	public static Common newStart() {
-		
-		Common user = createCharactor();
-		
-		BufferedWriter bw = null;
-		try {
-			bw = new BufferedWriter(new FileWriter("charactor.txt"));
-
-			if(user != null ) {
-
-				bw.write(user.getClass().getSimpleName() + "\n");
-				bw.write(user.getLevel() + "\n");
-				bw.write(user.getFullHp() +"\n");;
-				bw.write(user.getFullMp()+"\n");
-				bw.write(user.getHp()+ "\n");
-				bw.write(user.getMp()+ "\n");
-				bw.write(user.getPower() +"\n");
-				bw.write(user.getDefense() +"\n");
-				bw.write(user.getAvoidability() + "");
-				bw.flush();
-			}
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}finally {
-			if(bw != null) {
-				try {
-					bw.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-
-		}
-		
-		return user;
-	}
-	
-	/** 불러오기
-	 */
-	public static Common loadFile() {
-		ArrayList<Object> arr = null;
-		BufferedReader br = null ;
-		Common user = null;
-		try {
-			arr = new ArrayList<>();
-			br = new BufferedReader(new FileReader("charactor.txt"));
-			String line ;
-			try {
-				for (int i = 0; (line = br.readLine()) != null; i++) {
-					arr.add(line);
-				}
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		if( br != null) {
-			
-			switch((String) arr.get(0)) {
-				case "Oak" : user = new Oak(); break;
-				case "Human" : user = new Human(); break;
-				case "Elf" : user = new Elf(); break;
-			}
-			
-			user.setLevel(Integer.parseInt((String)arr.get(1)));
-			user.setFullHp(Integer.parseInt((String)arr.get(2)));
-			user.setFullMp(Integer.parseInt((String)arr.get(3)));
-			user.setHp(Integer.parseInt((String)arr.get(4)));
-			user.setMp(Integer.parseInt((String)arr.get(5)));
-			user.setPower(Integer.parseInt((String)arr.get(6)));
-			user.setDefense(Integer.parseInt((String)arr.get(7)));
-			user.setAvoidability(Double.parseDouble((String)arr.get(8)));
-		}
-		
-		return user;
-	}
-	
-	/** 캐릭터 생성
-	 * @return 선택한 종족의 Common 객체
-	 */
-	public static Common createCharactor() {
+	public static void waiting(Common user) {
 		
 		Scanner sc = new Scanner(System.in);
-		Common user = null;
-		label:
+		
 		while(true) {
-			System.out.println("캐릭터를 생성합니다.");
-			System.out.println("종족을 선택해주세요.");
-			System.out.println("1.오크(강한 공격력) \n"
-					+ "2.인간(강한 방어능력) \n"
-					+ "3.엘프(강한 민첩성) \n");
+			System.out.println("1. 캐릭터 정보 확인");
+			System.out.println("2. 무기 장착");
+			System.out.println("3. 스킬 확인");
+			System.out.println("4. 전투 입장");
+			System.out.println("5. 종료");
+			System.out.println("무기얻기");
+			System.out.println("저장하기");
 			int choice = sc.nextInt();
 			
 			switch(choice) {
-				case 1 : 
-					user = new Oak();
-					System.out.println("오크를 선택하시겠습니까?(Y/N)");
-					break;
+				case 1 : System.out.println(user); break;
 				case 2 : 
-					user = new Human();
-					System.out.println("인간을 선택하시겠습니까?(Y/N)");
+					List<Weapon> wL = user.getWeaponList();
+					System.out.println("====== 창고 ======");
+					if(wL.size() != 0) {
+						for(int i = 0; i < wL.size(); i++) {
+							System.out.println((i + 1) + ". " + wL.get(i)); 
+						}
+						sc.nextLine();
+						int weaponNum = sc.nextInt();
+						
+						if(wL.get(weaponNum - 1).getTribe().equals(user.getClass().getSimpleName())) {
+							user.setActivated(wL.get(weaponNum - 1));
+							System.out.println("장착 완료!");
+						} else {
+							System.out.println("종족에 맞는 무기만 장착할 수 있습니다.");
+						}
+						
+					} else {
+						System.out.println("아직 비어있습니다..");
+					}
 					break;
-				case 3 : 
-					user = new Elf();
-					System.out.println("엘프를 선택하시겠습니까?(Y/N)");
+				case 3 :
 					break;
-				default : System.out.println("숫자를 정확하게 입력해주세요."); continue label;
-			}
-			sc.nextLine();
-			String check = sc.nextLine().toUpperCase();
-			
-			if(check.equals("Y")) {
-				break label;
-			} else {
-				continue label;
+				case 4 : break;
+				case 5 : return;
+				case 6 : Weapon ws = new Weapon(); ws.getShortAxe(user); break;
+				case 7 : fs = new FileLoadSave(); fs.saveFile(user); break;
+				default : System.out.println("정확한 숫자를 입력해주세요.");
 			}
 		}
-		
-		return user;
 	}
+	
+	
+	
 	
 	
 }

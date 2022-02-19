@@ -16,10 +16,19 @@ public class Common {
 	private double speed;
 	private int defense;
 	private double Avoidability;
-	private String IsActivate;
-	private List<Map<String, Weapon>> weaponList;
+	private Weapon activated;
+	private String tribe;
+	private List<Weapon> weaponList;
 	
 	public Common() {}
+	
+	public void setTribe(String tribe) {
+		this.tribe = tribe;
+	}
+	
+	public String getTribe() {
+		return tribe;
+	}
 
 	public int getLevel() {
 		return level;
@@ -93,27 +102,33 @@ public class Common {
 		Avoidability = avoidability;
 	}
 	
-	public String getIsActivate() {
-		return IsActivate;
+	public Weapon getActivated() {
+		return activated;
 	}
 
-	public void setIsActivate(String isActivate) {
-		IsActivate = isActivate;
+	public void setActivated(Weapon activated) {
+		this.activated = activated;
 	}
 
-	public List<Map<String, Weapon>> getWeaponList() {
+	public List<Weapon> getWeaponList() {
 		return weaponList;
 	}
 
-	public void setWeaponList(List<Map<String, Weapon>> weaponList) {
+	public void setWeaponList(List<Weapon> weaponList) {
 		this.weaponList = weaponList;
 	}
 
 	@Override
 	public String toString() {
-		return "종족 : " + this.getClass().getSimpleName() + "\n" + "레벨 : " + level + "\n" + "체력 : " + hp + "/" + fullHp + "\n" + "마나 : " + mp + "/" + fullMp + "\n" 
+		String info = "종족 : " + this.getClass().getSimpleName() + "\n" + "레벨 : " + level + "\n" + "체력 : " + hp + "/" + fullHp + "\n" + "마나 : " + mp + "/" + fullMp + "\n" 
 				+ "공격력 : " + power + "\n" + "공격속도 : " + speed
-				+ "\n" + "방어력 : " + defense + "\n" + "회피율 : " + Avoidability;
+				+ "\n" + "방어력 : " + defense + "\n" + "회피율 : " + Avoidability + "\n" + "장착무기 : ";
+		if(this.activated != null) { 
+			info += this.activated.getName();
+		} else {
+			info += "없음";
+		}
+		return info;
 	}
 	
 	/**
