@@ -2,7 +2,12 @@ package com.bs.ct.run;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
+import com.bs.ct.common.BattleController;
 import com.bs.ct.common.FileLoadSave;
 import com.bs.ct.model.Common;
 import com.bs.ct.weapon.Weapon;
@@ -67,7 +72,7 @@ public class Application {
 				case 1 : System.out.println(user); break;
 				case 2 : 
 					List<Weapon> wL = user.getWeaponList();
-					System.out.println("====== 창고 ======");
+					System.out.println("======= 창고 =======");
 					if(wL.size() != 0) {
 						for(int i = 0; i < wL.size(); i++) {
 							System.out.println((i + 1) + ". " + wL.get(i)); 
@@ -88,7 +93,9 @@ public class Application {
 					break;
 				case 3 :
 					break;
-				case 4 : break;
+				case 4 : 
+					
+					break;
 				case 5 : return;
 				case 6 : Weapon ws = new Weapon(); ws.getShortAxe(user); break;
 				case 7 : fs = new FileLoadSave(); fs.saveFile(user); break;
@@ -98,7 +105,14 @@ public class Application {
 	}
 	
 	
-	
+	/** 전투 기능
+	 * @param user
+	 */
+	public void battleMode(Common user) {
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		
+
+	}
 	
 	
 }

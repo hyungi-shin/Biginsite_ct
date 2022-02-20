@@ -164,7 +164,7 @@ public class FileLoadSave {
 			System.out.println("종족을 선택해주세요.");
 			System.out.println("1.오크(강한 공격력) \n"
 					+ "2.인간(강한 방어능력) \n"
-					+ "3.엘프(강한 민첩성) \n");
+					+ "3.엘프(강한 민첩성)");
 			int choice = sc.nextInt();
 			
 			switch(choice) {

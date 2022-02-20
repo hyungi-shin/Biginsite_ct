@@ -14,5 +14,7 @@ public class Human extends Common {
 		super.setAvoidability(0.25);
 		super.setSpeed(1.0);
 	}	
+	
+	
 
 }
