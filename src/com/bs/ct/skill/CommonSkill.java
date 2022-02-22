@@ -1,48 +1,38 @@
 package com.bs.ct.skill;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.bs.ct.model.Common;
 
 public class CommonSkill {
 
-	private int buffPower;
-	private int buffSpeed;
-	private double buffAvoidability;
-	private int buffDefense;
+	static Timer timer = null;
+	static TimerTask tt = null;
 	
 	public CommonSkill() {}
 	
-	public int getBuffPower() {
-		return buffPower;
+	/** 
+	 * @return 스킬 수
+	 */
+	public static List<String> getSkills() {
+		List<String> list = new ArrayList<>();
+		list.add("heal");
+		list.add("steam");
+		System.out.println("Heal - 캐릭터의 Hp를 전체의 30% 만큼 회복");
+		System.out.println("Steam - 캐릭터의 공격력 20% 상승");
+		return list;
 	}
-
-	public void setBuffPower(int buffPower) {
-		this.buffPower = buffPower;
+	
+	public static void useSkill(String skill, Common user) {
+		switch(skill) {
+			case "heal" : heal(user); break;
+			case "steam" : steam(user); break;
+		}
 	}
-
-	public int getBuffSpeed() {
-		return buffSpeed;
-	}
-
-	public void setBuffSpeed(int buffSpeed) {
-		this.buffSpeed = buffSpeed;
-	}
-
-	public double getBuffAvoidability() {
-		return buffAvoidability;
-	}
-
-	public void setBuffAvoidability(double buffAvoidability) {
-		this.buffAvoidability = buffAvoidability;
-	}
-
-	public int getBuffDefense() {
-		return buffDefense;
-	}
-
-	public void setBuffDefense(int buffDefense) {
-		this.buffDefense = buffDefense;
-	}
-
+	
 	/** 캐릭터의 Hp를 전체의 30% 만큼 회복
 	 *  소모 mp : 10
 	 * @param user
@@ -59,21 +49,50 @@ public class CommonSkill {
 				user.setHp(user.getFullHp());
 			}
 			System.out.println("체력을 회복합니다.");
+			System.out.println("현재 체력 : (" + user.getHp() + "/" + user.getFullHp() + ")");
 		}
 		
 	}
 	
-	/** 두 턴동안 공격력 20% 상승
+	/** 20초간 공격력 20% 상승
 	 *  소모 mp : 15
 	 * @param user
 	 */
-	public void steam(Common user) {
+	public static void steam(Common user) {
 		
 		if(user.getMp() < 15) {
 			System.out.println("마나가 부족합니다.");
 		} else {
-			this.buffPower = (int)(user.getPower() * 0.2);
+			user.setPower((int)(user.getPower() * 1.2));
 			user.setMp(user.getMp() - 10);
+			System.out.println("공격력이 20초간 20% 상승합니다.");
+			timer = new Timer();
+			tt = new TimerTask() {
+				
+				@Override
+				public void run() {
+					// 20초 후 스킬 종료
+					int power = (int)((user.getPower() * 1.0) * (10.0 / 12.0));
+					user.setPower(power);
+					System.out.println("Steam 해제");
+					timer.cancel();
+				}
+			};
+			
+			timer.schedule(tt, 20000);
+		}
+	}
+	
+
+	/** 전투 종료 시 스킬 해제
+	 * @param user
+	 */
+	public static void battleFin(Common user) {
+		if(timer != null) {
+			int power = (int)((user.getPower() * 1.0) * (10.0 / 12.0));
+			user.setPower(power);
+			timer.cancel();
+			timer = null;
 		}
 	}
 }

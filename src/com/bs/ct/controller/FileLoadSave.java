@@ -1,4 +1,4 @@
-package com.bs.ct.common;
+package com.bs.ct.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

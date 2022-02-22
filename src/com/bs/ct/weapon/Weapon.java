@@ -115,10 +115,10 @@ public class Weapon {
 	public String toString() {
 		String info = this.name;
 		if(this.power != 0) {
-			info += " [" + "공격력 : + " + power + "]";
+			info += " [" + "공격력 : + " + (power * 100) + "%]";
 		}
 		if(this.speed != 0) {
-			info += " [" + "공격속도 : + " + speed + "]";
+			info += " [" + "공격속도 : + " + (speed * 100) + "%]";
 		}
 		
 		info += " (" + this.tribe + " 전용무기)";
@@ -126,6 +126,23 @@ public class Weapon {
 		return info;
 	}
 	
-	
+
+	/**
+	 * 전투 종료 시 보상
+	 */
+	public String battleReward(Common user) {
+		int random = (int)(Math.random() * 6 + 1);
+		String reward = "";
+		switch(random) {
+			case 1 : getShortSword(user); reward = "Short sword"; break;
+			case 2 : getLongSword(user); reward = "Long sword"; break;
+			case 3 : getShortBow(user); reward = "Short bow"; break;
+			case 4 : getIronBow(user); reward = "Iron Bow"; break;
+			case 5 : getShortAxe(user); reward = "Short axe"; break;
+			case 6 : getIronHammer(user); reward = "Iron hammer"; break;
+		}
+		
+		return reward;
+	}
 	
 }

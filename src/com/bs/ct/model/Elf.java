@@ -4,7 +4,8 @@ public class Elf extends Common {
 
 	// 종족 기본 능력치
 	public Elf() {
-
+		super.setTribe("Elf");
+		super.setLevel(1);
 		super.setFullHp(80);
 		super.setHp(80);
 		super.setDefense(10);
@@ -12,6 +13,6 @@ public class Elf extends Common {
 		super.setMp(70);
 		super.setPower(15);
 		super.setAvoidability(0.4);
-		super.setSpeed(1.4);
+		super.setSpeed(0.7);
 	}
 }

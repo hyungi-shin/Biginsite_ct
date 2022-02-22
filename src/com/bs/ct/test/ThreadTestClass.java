@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 
 import com.bs.ct.model.Common;
 
-public class TestClass {
+public class ThreadTestClass {
 
 	public static ThreadLocal<Integer> local = new ThreadLocal<Integer>();
 	

@@ -146,4 +146,40 @@ public class Common {
 		System.out.println("레벨 업!");
 	}
 	
+	/**
+	 * 사망 시 레벨 다운
+	 */
+	public void levelDown() {
+		System.err.println("===== 캐릭터가 사망하였습니다. =====");
+		if(this.level <= 1) {
+			System.out.println("최소 레벨은 1입니다.");
+		} else {
+			System.out.println("레벨이 1 낮아집니다.");
+			this.level--;
+			this.fullHp -= 20;
+			this.fullMp -= 10;
+			this.power -= 3;
+			this.defense -= 3;
+			this.hp = this.fullHp;
+			this.mp = this.fullMp;
+		}
+	}
+	
+	/** 회피율 계산 메소드
+	 * @return true - 회피 / false - 회피 실패
+	 */
+	public boolean avoid() {
+		boolean result = true;
+		int random = (int)(Math.random() * 100 + 1);
+		int avoidAbi = (int)(this.getAvoidability() * 100);
+		
+		if(random > 0 && random < avoidAbi) {
+			result = true;
+		} else {
+			result = false;
+		}
+		
+		return result;
+	}
+	
 }

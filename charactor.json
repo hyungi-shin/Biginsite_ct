@@ -1,1 +1,1 @@
-{"level":0,"fullHp":150,"fullMp":30,"hp":150,"mp":30,"power":35,"speed":0.6,"defense":20,"activated":{"power":0.1,"name":"Short Axe","tribe":"Oak"},"tribe":"Oak","weaponList":[{"power":0.1,"name":"Short Axe","tribe":"Oak"}],"avoidability":0.1}
+{"level":2,"fullHp":170,"fullMp":40,"hp":170,"mp":40,"power":38,"speed":1.4,"defense":23,"activated":null,"tribe":"Oak","weaponList":[{"power":0.05,"name":"Short sword","tribe":"Human"}],"avoidability":0.1}

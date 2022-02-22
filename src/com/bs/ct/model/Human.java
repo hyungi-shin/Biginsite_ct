@@ -4,7 +4,8 @@ public class Human extends Common {
 
 	// 종족 기본 능력치
 	public Human() {
-	
+		super.setTribe("Human");
+		super.setLevel(1);
 		super.setFullHp(100);
 		super.setHp(100);
 		super.setDefense(15);
