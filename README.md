@@ -1,4 +1,9 @@
 # Biginsite_ct
+---- 사용 라이브러리
+
+json-simple, jackson 라이브러리
+
+
 ---- 데이터 저장
 
 json으로 사용자 정보 저장하는 방식 사용
